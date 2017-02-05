@@ -1,0 +1,56 @@
+
+
+blog website: 
+blogger, 
+wordpress
+github page
+
+language:
+1. html,css
+2. markdown --> html,css
+
+tools:
+如何搭建一个独立博客——简明Github Pages与Hexo教程
+http://www.jianshu.com/p/05289a4bc8b2
+
+一步步在GitHub上创建博客主页-最新版 
+http://www.pchou.info/ssgithubPage/2013-01-03-build-github-blog-page-01.html
+http://www.pchou.info/ssgithubPage/2014-07-04-build-github-blog-page-08.html
+
+github help link
+https://help.github.com/articles/using-jekyll-as-a-static-site-generator-with-github-pages/
+
+----templetate are all here
+http://jekyllthemes.org/page1/
+
+----Document theme url link
+http://jekyllthemes.org/themes/documentation-theme-jekyll/
+
+----resume theme
+http://jekyllthemes.org/themes/vitae/
+https://biomadeira.github.io/vitae/
+
+----index page theme
+http://laobubu.net/jekyll-theme-EasyBook/
+
+Github Pages极简教程
+http://www.360doc.com/content/12/0421/09/1016783_205350218.shtml
+
+jekyll all kinds of example:
+https://github.com/jekyll/jekyll/wiki/sites
+
+http://jekyllrb.com/
+http://jekyllbootstrap.com/
+
+set the gem sources 
+
+$ gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
+$ gem sources -l
+*** CURRENT SOURCES ***
+
+https://gems.ruby-china.org
+# 请确保只有 gems.ruby-china.org
+$ gem install rails
+
+Install jekyll
+gem install jekyll

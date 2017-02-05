@@ -1,0 +1,30 @@
+CREATE TABLE users (
+    first_name text,
+    last_name text
+);
+
+SELECT md5(random()::text), md5(random()::text) FROM
+          (SELECT * FROM generate_series(1,1000000) AS id) AS x ;
+
+INSERT INTO users (SELECT md5(random()::text) as f1, md5(random()::text) as f2 FROM
+          (SELECT * FROM generate_series(1,1000000) AS id) AS x);
+
+
+
+SELECT count(*) FROM users where first_name ilike '%aeb%';
+
+
+SELECT count(*) FROM users where first_name ilike '%aeb%' or last_name ilike'%aeb%';
+
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+CREATE INDEX users_search_idx ON users USING gin (first_name gin_trgm_ops, last_name gin_trgm_ops);
+
+
+DROP EXTENSION IF EXISTS pg_trgm;
+
+create table test(f1 int, fname text, lname text);
+
+insert into test (select random()*100000, first_name,last_name from users);
+
+REATE INDEX test_ind ON test USING brin( 

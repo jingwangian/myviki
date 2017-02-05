@@ -1,0 +1,90 @@
+*****C Library*****
+<cassert> (assert.h)    C Diagnostics Library (header)
+<cctype> (ctype.h)    Character handling functions (header)
+<cerrno> (errno.h)    C Errors (header)
+<cfenv> (fenv.h)    Floating-point environment (header)
+<cfloat> (float.h)    Characteristics of floating-point types (header)
+<cinttypes> (inttypes.h)    C integer types (header)
+<ciso646> (iso646.h)    ISO 646 Alternative operator spellings (header)
+<climits> (limits.h)    Sizes of integral types (header)
+<clocale> (locale.h)    C localization library (header)
+<cmath> (math.h)    C numerics library (header)
+<csetjmp> (setjmp.h)    Non local jumps (header)
+<csignal> (signal.h)    C library to handle signals (header)
+<cstdarg> (stdarg.h)    Variable arguments handling (header)
+<cstdbool> (stdbool.h)    Boolean type (header)
+<cstddef> (stddef.h)    C Standard definitions (header)
+<cstdint> (stdint.h)    Integer types (header)
+<cstdio> (stdio.h)    C library to perform Input/Output operations (header)
+<cstdlib> (stdlib.h)    C Standard General Utilities Library (header)
+<cstring> (string.h)    C Strings (header)
+<ctgmath> (tgmath.h)    Type-generic math (header)
+<ctime> (time.h)    C Time Library (header)
+<cuchar> (uchar.h)    Unicode characters (header)
+<cwchar> (wchar.h)    Wide characters (header)
+<cwctype> (wctype.h)    Wide character type (header)
+
+*****assert.h*****
+void assert (int expression);
+
+/* assert example */
+#include <stdio.h>      /* printf */
+#include <assert.h>     /* assert */
+
+void print_number(int* myInt) {
+  assert (myInt!=NULL);
+  printf ("%d\n",*myInt);
+}
+
+int main ()
+{
+  int a=10;
+  int * b = NULL;
+  int * c = NULL;
+
+  b=&a;
+
+  print_number (b);
+  print_number (c);
+
+  return 0;
+}
+
+
+*****ctype.h*****
+isalnum
+Check if character is alphanumeric (function )
+
+isalpha
+Check if character is alphabetic (function )
+
+isblank
+Check if character is blank (function )
+
+iscntrl
+Check if character is a control character (function )
+
+isdigit
+Check if character is decimal digit (function )
+
+isgraph
+Check if character has graphical representation (function )
+
+islower
+Check if character is lowercase letter (function )
+
+isprint
+Check if character is printable (function )
+
+ispunct
+Check if character is a punctuation character (function )
+
+isspace
+Check if character is a white-space (function )
+
+isupper
+Check if character is uppercase letter (function )
+
+isxdigit
+Check if character is hexadecimal digit (function )
+

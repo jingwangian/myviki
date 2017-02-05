@@ -1,0 +1,10 @@
+
+How to skip the unit test.
+In some situation if you want to skip the test and let the build process continue
+just using the following command:
+
+mvn package -DskipTests=true -Ptranslate
+
+-DskipTests --- don't run the test
+-Ptranslate --- update the line number in the po files
+

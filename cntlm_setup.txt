@@ -1,0 +1,24 @@
+This chapter guid you how to start cntlm in centos7
+
+I realised that the /var/run/cntlm directory seemed to be "removed" after every boot. Turns out the /var/run/cntlm directory is never created by systemd-tmpfiles on boot (thanks to this SO answer), which then resulted in:
+
+Feb 29 06:13:04 node01 cntlm: Using following NTLM hashes: NTLMv2(1) NT(0) LM(0)
+Feb 29 06:13:04 node01 cntlm[10540]: Daemon ready
+Feb 29 06:13:04 node01 cntlm[10540]: Changing uid:gid to 996:995 - Success
+Feb 29 06:13:04 node01 cntlm[10540]: Error creating a new PID file
+because cntlm couldn't write it's pid file because /var/run/cntlm didn't exist.
+
+So to get systemd-tmpfiles to create the /var/run/cntlm directory on boot you need to 
+
+1. add the following file in i
+
+1. Open or create the /usr/lib/tmpfiles.d/cntlm.conf:
+
+2. Put the  "d /run/cntlm   700 cntlm cntlm" in above file
+
+3. Start the cntlm by the following command:
+
+    sudo cntlm -c /etc/cntlm.conf
+
+4: Check the port is start or not:
+    netstat -an | grep 3128
