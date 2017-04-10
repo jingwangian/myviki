@@ -1,0 +1,7 @@
+YAML
+
+What is YAML
+
+YAML (/ˈjæməl/, rhymes with camel) is a human-readable data serialization language.It is commonly used for configuration files, but could also be used in many applications where data are being stored or transmitted.
+
+YAML is a superset of JSON.

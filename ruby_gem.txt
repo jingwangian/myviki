@@ -1,0 +1,26 @@
+gem viki
+
+
+What is a gem
+
+gem is a command tool used by RubyGems
+
+RubyGems is a package manager for the Ruby.
+
+
+
+
+
+##How to set the gem behind the proxy
+Open the ~/.gemrc file, put the following command in the file:
+
+http_proxy: http://useraname:password@proxy_server_ip:port
+
+If you are using the cntlm as a proxy the command can be as following:
+
+http_proxy: http://127.0.0.1:3128
+
+
+Another way is set the HTTP_PROXY as following:
+
+SET HTTP_PROXY=http://useraname:password@proxy_server_ip:port
