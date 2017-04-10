@@ -1,0 +1,10 @@
+**** How to change the timezone in ubutu ****
+
+1. show date
+    date
+
+2. run command 
+    sudo dpkg-reconfigure tzdata
+
+    then you can select the time zone in the dialog box
+
