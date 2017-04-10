@@ -10,15 +10,16 @@ because cntlm couldn't write it's pid file because /var/run/cntlm didn't exist.
 
 So to get systemd-tmpfiles to create the /var/run/cntlm directory on boot you need to 
 
-1. add the following file in i
 
 1. Open or create the /usr/lib/tmpfiles.d/cntlm.conf:
 
 2. Put the  "d /run/cntlm   700 cntlm cntlm" in above file
 
-3. Start the cntlm by the following command:
+3. Edit the /etc/cntlm.conf
+
+4. Start the cntlm by the following command:
 
     sudo cntlm -c /etc/cntlm.conf
 
-4: Check the port is start or not:
+5: Check the port is start or not:
     netstat -an | grep 3128
