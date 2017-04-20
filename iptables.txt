@@ -1,0 +1,117 @@
+
+When you start a postgresql server in Linux and try to connect to it from another machine, The following things should be consindered:
+
+1. set postgresql.conf
+
+2. set hba.conf
+
+3. change the iptables.
+
+
+(1). List the current policy in the iptables
+
+    sudo iptables -L --line-numbers
+
+
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     udp  --  anywhere             anywhere             udp dpt:domain
+2    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:domain
+3    ACCEPT     udp  --  anywhere             anywhere             udp dpt:bootps
+4    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:bootps
+5    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+6    ACCEPT     all  --  anywhere             anywhere            
+7    INPUT_direct  all  --  anywhere             anywhere            
+8    INPUT_ZONES_SOURCE  all  --  anywhere             anywhere            
+9    INPUT_ZONES  all  --  anywhere             anywhere            
+10   DROP       all  --  anywhere             anywhere             ctstate INVALID
+11   REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+
+(2). Append a new policy for the postgresql port
+
+    sudo iptables -A INPUT -p tcp --dport 27500 -j ACCEPT
+
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     udp  --  anywhere             anywhere             udp dpt:domain
+2    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:domain
+3    ACCEPT     udp  --  anywhere             anywhere             udp dpt:bootps
+4    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:bootps
+5    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+6    ACCEPT     all  --  anywhere             anywhere            
+7    INPUT_direct  all  --  anywhere             anywhere            
+8    INPUT_ZONES_SOURCE  all  --  anywhere             anywhere            
+9    INPUT_ZONES  all  --  anywhere             anywhere            
+10   DROP       all  --  anywhere             anywhere             ctstate INVALID
+11   REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+12   ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:27500
+
+
+(3). Move the above policy ahead of the DROP policy
+
+sudo iptables -D INPUT 10
+
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     udp  --  anywhere             anywhere             udp dpt:domain
+2    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:domain
+3    ACCEPT     udp  --  anywhere             anywhere             udp dpt:bootps
+4    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:bootps
+5    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+6    ACCEPT     all  --  anywhere             anywhere            
+7    INPUT_direct  all  --  anywhere             anywhere            
+8    INPUT_ZONES_SOURCE  all  --  anywhere             anywhere            
+9    INPUT_ZONES  all  --  anywhere             anywhere            
+10   REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+11   ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:27500
+
+
+sudo iptables -D INPUT 10
+
+sudo iptables -L --line-numbers
+
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     udp  --  anywhere             anywhere             udp dpt:domain
+2    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:domain
+3    ACCEPT     udp  --  anywhere             anywhere             udp dpt:bootps
+4    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:bootps
+5    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+6    ACCEPT     all  --  anywhere             anywhere            
+7    INPUT_direct  all  --  anywhere             anywhere            
+8    INPUT_ZONES_SOURCE  all  --  anywhere             anywhere            
+9    INPUT_ZONES  all  --  anywhere             anywhere            
+10   REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+11   ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:27500
+
+sudo iptables -L --line-numbers
+num  target     prot opt source               destination         
+1    ACCEPT     udp  --  anywhere             anywhere             udp dpt:domain
+2    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:domain
+3    ACCEPT     udp  --  anywhere             anywhere             udp dpt:bootps
+4    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:bootps
+5    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+6    ACCEPT     all  --  anywhere             anywhere            
+7    INPUT_direct  all  --  anywhere             anywhere            
+8    INPUT_ZONES_SOURCE  all  --  anywhere             anywhere            
+9    INPUT_ZONES  all  --  anywhere             anywhere            
+10   ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:27500
+
+
+sudo iptables -A INPUT -j DROP
+
+sudo iptables -L --line-numbers
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     udp  --  anywhere             anywhere             udp dpt:domain
+2    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:domain
+3    ACCEPT     udp  --  anywhere             anywhere             udp dpt:bootps
+4    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:bootps
+5    ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+6    ACCEPT     all  --  anywhere             anywhere            
+7    INPUT_direct  all  --  anywhere             anywhere            
+8    INPUT_ZONES_SOURCE  all  --  anywhere             anywhere            
+9    INPUT_ZONES  all  --  anywhere             anywhere            
+10   ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:27500
+11   DROP       all  --  anywhere             anywhere  

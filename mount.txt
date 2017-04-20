@@ -1,0 +1,9 @@
+
+The normal usage:
+mount -t type device dir
+
+
+How to mount a iso file
+mkdir cobolinstall
+mount -t iso9600 -o loop  cobol.iso cobolinstall
+
